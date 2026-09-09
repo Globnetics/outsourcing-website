@@ -125,7 +125,7 @@ export default async function CaseStudyDetailPage({
             ))}
           </div>
         </div>
-
+{/* 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-6 border-y border-(--border-color)">
           {study.key_results.map((res, i) => (
             <div key={i} className="flex flex-col">
@@ -137,7 +137,7 @@ export default async function CaseStudyDetailPage({
               </span>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="space-y-12 sm:space-y-16">
           <div className="p-8 sm:p-10 rounded-2xl border border-(--border-color) bg-slate-50/50 dark:bg-zinc-950/50">
@@ -235,7 +235,7 @@ export default async function CaseStudyDetailPage({
         {relatedStudies.length > 0 && (
           <div className="pt-12 border-t border-(--border-color)">
             <h3 className="text-xl sm:text-2xl font-bold text-(--text-primary) font-display mb-6">
-              More Engineering Case Studies
+              More Products Case Studies
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {relatedStudies.map((rel) => (

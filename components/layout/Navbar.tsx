@@ -102,7 +102,7 @@ const TECH_SECTIONS = [
 ];
 
 const NAV_LINKS = [
-  { title: "Case Studies", href: "/case-studies" },
+  { title: "Our Work", href: "/case-studies" },
   { title: "About Us", href: "/about" },
   { title: "Contact", href: "/contact" },
 ];
