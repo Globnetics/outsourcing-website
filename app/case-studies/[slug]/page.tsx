@@ -37,7 +37,7 @@ export async function generateMetadata({
   if (!study) return { title: 'Case Study Not Found' }
 
   return {
-    title: `${study.title} | RiseUp Case Study`,
+    title: `${study.title} | Falcon Case Study`,
     description: study.summary,
   }
 }

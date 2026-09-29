@@ -6,7 +6,7 @@ import ServiceStacks from '@/components/technologies/ServiceStacks'
 import TechnicalFAQ from '@/components/technologies/TechnicalFAQ'
 
 export const metadata: Metadata = {
-  title: 'Enterprise Technology Stacks | RiseUp',
+  title: 'Enterprise Technology Stacks | Falcon',
   description:
     'Explore our production-grade technology clusters engineered for enterprise scalability across Web, Mobile, ERP, and Custom systems.',
 }

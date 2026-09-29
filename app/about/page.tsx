@@ -6,7 +6,7 @@ import LeadershipTeam from '@/components/about/LeadershipTeam'
 import AboutCTA from '@/components/about/AboutCTA'
 
 export const metadata: Metadata = {
-  title: 'About Us | RiseUp Solutions',
+  title: 'About Us | Falcon',
   description:
     'Born from a collective of enterprise architects and high-growth startup veterans, our mission is to deliver technical excellence without compromise.',
 }

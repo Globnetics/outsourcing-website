@@ -1,29 +1,33 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import { motion } from 'motion/react'
+import { UserStar, UserRoundCheck, UserRoundSearch, UserRoundCog } from 'lucide-react'
 
-const LEADERS = [
+const TEAM_MEMBERS = [
   {
-    name: 'Sarah Jenkins',
-    role: 'Chief Executive Officer',
-    image: '/images/leader_sarah_jenkins.jpg',
+    name: 'Abel Woldemichael',
+    role: 'CEO',
+    department: 'Executive Leadership',
+    icon: UserStar,
   },
   {
-    name: 'Marcus Chen',
-    role: 'Chief Technology Officer',
-    image: '/images/leader_marcus_chen.jpg',
+    name: 'Siham Aminu',
+    role: 'Project Manager',
+    department: 'Project Management & Delivery',
+    icon: UserRoundCheck,
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'VP of Engineering',
-    image: '/images/leader_elena_rodriguez.jpg',
+    name: 'Rishi Gupta',
+    role: 'Marketing Manager',
+    department: 'Growth & Brand Strategy',
+    icon: UserRoundSearch,
   },
   {
-    name: 'David Kim',
-    role: 'Head of Product',
-    image: '/images/leader_david_kim.jpg',
+    name: 'Matheos Belay',
+    role: 'Software Developer',
+    department: 'Software Engineering',
+    icon: UserRoundCog,
   },
 ]
 
@@ -38,41 +42,44 @@ export default function LeadershipTeam() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-(--text-primary) font-display">
-            Leadership Team
+          <span className="font-mono text-xs tracking-widest uppercase text-(--teal) font-semibold">
+            Core Leadership
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-(--text-primary) font-display mt-2">
+            Leadership &amp; Team
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {LEADERS.map((leader, idx) => (
-            <motion.div
-              key={leader.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col group"
-            >
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-(--border-color) bg-slate-900 shadow-md">
-                <Image
-                  src={leader.image}
-                  alt={leader.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {TEAM_MEMBERS.map((member, idx) => {
+            const Icon = member.icon
+            return (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative flex flex-col items-center text-center p-8 rounded-2xl border border-(--border-color) bg-(--bg-secondary)/40 hover:bg-(--bg-secondary)/70 hover:border-(--teal)/50 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-(--teal)/5"
+              >
+                <div className="w-20 h-20 rounded-full flex items-center justify-center bg-(--teal)/10 border-2 border-(--teal)/20 text-(--teal) group-hover:scale-105 group-hover:bg-(--teal)/15 group-hover:border-(--teal) group-hover:shadow-lg group-hover:shadow-(--teal)/20 transition-all duration-300 mb-6 relative">
+                  <Icon className="w-9 h-9" />
+                </div>
 
-              <div className="mt-4">
-                <h3 className="text-lg sm:text-xl font-bold text-(--text-primary) font-display leading-tight">
-                  {leader.name}
+                <h3 className="text-xl font-bold text-(--text-primary) font-display tracking-tight leading-tight">
+                  {member.name}
                 </h3>
-                <p className="font-mono text-xs text-(--teal) mt-1 tracking-tight">
-                  {leader.role}
+
+                <p className="font-mono text-sm text-(--teal) font-semibold mt-1.5 tracking-tight">
+                  {member.role}
                 </p>
-              </div>
-            </motion.div>
-          ))}
+
+                <p className="font-mono text-xs text-(--text-muted) mt-2">
+                  {member.department}
+                </p>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

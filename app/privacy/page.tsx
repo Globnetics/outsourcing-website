@@ -18,7 +18,7 @@ export default function PrivacyPage() {
 
         <div className="mt-8 space-y-6 text-sm text-(--text-secondary) leading-relaxed">
           <p>
-            At RiseUp Solutions, we prioritize the protection and
+            At Falcon, we prioritize the protection and
             confidentiality of your personal and business data. This Privacy
             Policy outlines how we collect, process, and protect your
             information when you visit our website or engage our engineering

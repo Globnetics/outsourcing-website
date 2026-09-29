@@ -4,12 +4,12 @@ export default function JsonLd() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    name: 'RiseUp Solutions',
-    url: 'https://riseup.solutions',
-    logo: 'https://riseup.solutions/images/hero_circuit_matrix.jpg',
+    name: 'Falcon',
+    url: 'https://falcon.engineering',
+    logo: 'https://falcon.engineering/images/hero_circuit_matrix.jpg',
     description:
       'Engineering high-performance digital systems. Custom ERP, mobile apps, web platforms, and distributed software built for scale.',
-    email: 'sendlyglobal@gmail.com',
+    email: 'contact@falcon.engineering',
     priceRange: '$$$$',
     areaServed: 'Worldwide',
     hasOfferCatalog: {

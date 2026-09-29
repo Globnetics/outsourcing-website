@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { SERVICES } from '@/lib/services'
 import { CASE_STUDIES } from '@/lib/case-studies'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://riseup.solutions'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://falcon.engineering'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

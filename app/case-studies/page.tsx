@@ -3,7 +3,7 @@ import React from 'react'
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
 
 export const metadata: Metadata = {
-  title: 'Our Work | RiseUp Engineering',
+  title: 'Our Work | Falcon Engineering',
   description:
     'Our work shows the kind of problems we can solve. Each project explains what the problem was, what we built, how we built it, and the result.',
 }

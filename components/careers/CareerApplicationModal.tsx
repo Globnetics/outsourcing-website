@@ -93,7 +93,7 @@ export default function CareerApplicationModal({ isOpen, onClose }: CareerApplic
                 General Application
               </span>
               <h3 className="text-xl sm:text-2xl font-bold text-(--text-primary) font-display mt-0.5">
-                Join RiseUp Engineering
+                Join Falcon Engineering
               </h3>
             </div>
 
@@ -118,7 +118,7 @@ export default function CareerApplicationModal({ isOpen, onClose }: CareerApplic
                 Application Submitted!
               </h4>
               <p className="text-sm text-(--text-secondary) max-w-md leading-relaxed">
-                Thank you for your interest in RiseUp Engineering. We review every profile carefully and will reach out if your background matches upcoming opportunities.
+                Thank you for your interest in Falcon Engineering. We review every profile carefully and will reach out if your background matches upcoming opportunities.
               </p>
               <Button
                 variant="primary"

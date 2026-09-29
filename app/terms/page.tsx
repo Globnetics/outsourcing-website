@@ -18,7 +18,7 @@ export default function TermsPage() {
 
         <div className="mt-8 space-y-6 text-sm text-(--text-secondary) leading-relaxed">
           <p>
-            By accessing the RiseUp Solutions website or contracting our
+            By accessing the Falcon website or contracting our
             software engineering and consulting services, you agree to comply
             with and be bound by the following terms and conditions.
           </p>

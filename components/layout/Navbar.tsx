@@ -194,14 +194,14 @@ export default function Navbar() {
             className="flex items-center gap-2.5 group select-none"
           >
             <div className="w-8.5 h-8.5 rounded-lg bg-[#0b2545] border border-white/15 flex items-center justify-center text-white font-mono font-bold text-sm tracking-tighter group-hover:border-(--teal) transition-colors shadow-xs">
-              TN
+              FL
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-base tracking-tight text-(--text-primary) leading-tight font-display">
-                RiseUp
+                Falcon
               </span>
               <span className="font-mono text-[9px] uppercase tracking-widest text-(--teal) font-medium">
-                Engineering
+                Technologies
               </span>
             </div>
           </Link>

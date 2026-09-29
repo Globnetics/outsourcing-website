@@ -8,7 +8,7 @@ const TESTIMONIALS = [
   {
     id: 1,
     quote:
-      "RiseUp doesn't just write code; they engineer solutions that fundamentally improve how our business operates. Their technical transparency and ability to scale complex architectures is unmatched in the outsourcing space.",
+      "Falcon doesn't just write code; they engineer solutions that fundamentally improve how our business operates. Their technical transparency and ability to scale complex architectures is unmatched in the outsourcing space.",
     name: "Marcus Vance",
     role: "CTO",
     company: "Nexcorp Global",
@@ -18,7 +18,7 @@ const TESTIMONIALS = [
   {
     id: 2,
     quote:
-      "Re-architecting our monolithic legacy ERP into event-driven microservices reduced global warehouse data latency by 42%. RiseUp brought senior staff engineers who owned the delivery from sprint zero.",
+      "Re-architecting our monolithic legacy ERP into event-driven microservices reduced global warehouse data latency by 42%. Falcon brought senior staff engineers who owned the delivery from sprint zero.",
     name: "Klaus Reinhardt",
     role: "VP of Engineering",
     company: "TransGlobal Logistics",
@@ -28,7 +28,7 @@ const TESTIMONIALS = [
   {
     id: 3,
     quote:
-      "We needed a zero-trust mobile neo-banking platform processing millions of daily transactions under strict FCA audit. RiseUp delivered ahead of schedule with zero security audit findings.",
+      "We needed a zero-trust mobile neo-banking platform processing millions of daily transactions under strict FCA audit. Falcon delivered ahead of schedule with zero security audit findings.",
     name: "Sophie Laurent",
     role: "Head of Mobile",
     company: "Aura Financial",

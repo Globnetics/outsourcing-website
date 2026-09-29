@@ -2,10 +2,10 @@ import { CaseStudy } from '@/types/case-study'
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    slug: 'globnetics-web-platform',
-    title: 'Globnetics: High-Performance Global Engineering Platform',
+    slug: 'falcon-web-platform',
+    title: 'Falcon: High-Performance Global Engineering Platform',
     summary:
-      'Global enterprises needed a fast, interactive digital engineering platform to explore technical capabilities, calculate architectures, and schedule direct engineering engagements. We engineered the Globnetics web platform with Next.js Server Components, interactive 2D orbital physics, and sub-80ms global response times.',
+      'Global enterprises needed a fast, interactive digital engineering platform to explore technical capabilities, calculate architectures, and schedule direct engineering engagements. We engineered the Falcon web platform with Next.js Server Components, interactive 2D orbital physics, and sub-80ms global response times.',
     location: 'Global',
     industry: 'Enterprise Web / Tech Platform',
     category: 'web',
@@ -66,7 +66,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     solution: {
       heading: 'What We Built',
       paragraphs: [
-        'We built the Globnetics web platform from the ground up utilizing Next.js, TypeScript, Tailwind CSS, and custom 2D canvas/SVG physics calculations.',
+        'We built the Falcon web platform from the ground up utilizing Next.js, TypeScript, Tailwind CSS, and custom 2D canvas/SVG physics calculations.',
         'The platform includes custom interactive 2D orbital planetary systems, stepped horizontal methodology delivery tracks, a unified dark/light design token architecture, and direct Cal.com consultation booking.',
       ],
       subFeatures: [
@@ -85,7 +85,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     result: {
       heading: 'The Result',
       paragraphs: [
-        'The Globnetics platform achieved a 99/100 Google Lighthouse score and reduced visitor consultation booking friction by over 70%.',
+        'The Falcon platform achieved a 99/100 Google Lighthouse score and reduced visitor consultation booking friction by over 70%.',
         'Stakeholders can effortlessly explore interactive technology stacks and engineering methodologies across all desktop and mobile devices with zero latency.',
       ],
     },
@@ -94,7 +94,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         'The platform showcases our engineering precision and technical depth. It is blazingly fast, visually stunning, and provides clients with a clear window into our engineering standards.',
       name: 'Engineering Leadership',
       title: 'Head of Product Delivery',
-      company: 'Globnetics Solutions',
+      company: 'Falcon Engineering',
     },
   },
   {

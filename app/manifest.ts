@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'RiseUp Solutions | High Performance Digital Engineering',
-    short_name: 'RiseUp',
+    name: 'Falcon | High Performance Digital Engineering',
+    short_name: 'Falcon',
     description: 'Custom ERP, Mobile, Web, and Distributed software engineering for enterprises.',
     start_url: '/',
     display: 'standalone',

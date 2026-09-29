@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://riseup.solutions'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://falcon.engineering'
 
 export const viewport: Viewport = {
   themeColor: [
@@ -43,8 +43,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'RiseUp Solutions | High Performance Digital Engineering',
-    template: '%s | RiseUp Solutions',
+    default: 'Falcon | High Performance Digital Engineering',
+    template: '%s | Falcon',
   },
   description:
     'ERP, Mobile, and Web systems built for scale. We deliver technical excellence designed to drive your business forward with uncompromising reliability and agility.',
@@ -62,9 +62,9 @@ export const metadata: Metadata = {
     'Go',
     'Rust',
   ],
-  authors: [{ name: 'RiseUp Solutions' }],
-  creator: 'RiseUp Solutions',
-  publisher: 'RiseUp Solutions',
+  authors: [{ name: 'Falcon' }],
+  creator: 'Falcon',
+  publisher: 'Falcon',
   formatDetection: {
     email: false,
     address: false,
@@ -74,20 +74,20 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'RiseUp Solutions | High Performance Digital Engineering',
+    title: 'Falcon | High Performance Digital Engineering',
     description:
       'ERP, Mobile, and Web systems built for scale. We deliver technical excellence designed to drive your business forward.',
     url: SITE_URL,
-    siteName: 'RiseUp Solutions',
+    siteName: 'Falcon',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RiseUp Solutions | High Performance Digital Engineering',
+    title: 'Falcon | High Performance Digital Engineering',
     description:
       'ERP, Mobile, and Web systems built for scale. We deliver technical excellence designed to drive your business forward.',
-    creator: '@RiseUpSolutions',
+    creator: '@FalconEng',
   },
   robots: {
     index: true,

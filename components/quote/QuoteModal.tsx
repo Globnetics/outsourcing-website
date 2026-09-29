@@ -1,162 +1,201 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { 
-  X, 
-  ChevronLeft, 
-  ChevronDown
-} from 'lucide-react'
-import { Button, Input } from '@/components/ui'
-import Cal from '@calcom/embed-react'
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { X, ChevronLeft, ChevronDown, Globe } from "lucide-react";
+import { Button, Input } from "@/components/ui";
+import Cal from "@calcom/embed-react";
 
 export type ProjectType =
-  | 'web-development'
-  | 'mobile-development'
-  | 'backend-api-development'
-  | 'enterprise-software'
-  | 'cloud-devops'
-  | 'ai-automation'
-  | 'software-modernization'
-  | 'qa-testing'
-  | 'custom'
+  | "web-development"
+  | "mobile-development"
+  | "backend-api-development"
+  | "enterprise-software"
+  | "cloud-devops"
+  | "ai-automation"
+  | "software-modernization"
+  | "qa-testing"
+  | "custom";
 
 interface QuoteModalProps {
-  isOpen: boolean
-  onClose: () => void
-  initialProjectType?: string
+  isOpen: boolean;
+  onClose: () => void;
+  initialProjectType?: string;
 }
 
 interface ProjectOption {
-  id: ProjectType
-  title: string
-  desc: string
-  eventSlug: string
+  id: ProjectType;
+  title: string;
+  desc: string;
+  eventSlug: string;
 }
 
 export function normalizeProjectType(type?: string): ProjectType {
-  if (!type) return 'web-development'
-  const normalized = type.toLowerCase().trim()
+  if (!type) return "web-development";
+  const normalized = type.toLowerCase().trim();
 
-  if (normalized.includes('mobile') || normalized === 'ios' || normalized === 'android' || normalized === 'flutter') {
-    return 'mobile-development'
+  if (
+    normalized.includes("mobile") ||
+    normalized === "ios" ||
+    normalized === "android" ||
+    normalized === "flutter"
+  ) {
+    return "mobile-development";
   }
-  if (normalized.includes('backend') || normalized.includes('api') || normalized === 'apis') {
-    return 'backend-api-development'
+  if (
+    normalized.includes("backend") ||
+    normalized.includes("api") ||
+    normalized === "apis"
+  ) {
+    return "backend-api-development";
   }
-  if (normalized.includes('enterprise') || normalized.includes('erp') || normalized === 'sap' || normalized === 'odoo') {
-    return 'enterprise-software'
+  if (
+    normalized.includes("enterprise") ||
+    normalized.includes("erp") ||
+    normalized === "sap" ||
+    normalized === "odoo"
+  ) {
+    return "enterprise-software";
   }
-  if (normalized.includes('cloud') || normalized.includes('devops') || normalized.includes('kubernetes')) {
-    return 'cloud-devops'
+  if (
+    normalized.includes("cloud") ||
+    normalized.includes("devops") ||
+    normalized.includes("kubernetes")
+  ) {
+    return "cloud-devops";
   }
-  if (normalized.includes('ai') || normalized.includes('automation') || normalized.includes('ml')) {
-    return 'ai-automation'
+  if (
+    normalized.includes("ai") ||
+    normalized.includes("automation") ||
+    normalized.includes("ml")
+  ) {
+    return "ai-automation";
   }
-  if (normalized.includes('modern') || normalized.includes('legacy') || normalized.includes('refactor')) {
-    return 'software-modernization'
+  if (
+    normalized.includes("modern") ||
+    normalized.includes("legacy") ||
+    normalized.includes("refactor")
+  ) {
+    return "software-modernization";
   }
-  if (normalized.includes('qa') || normalized.includes('test') || normalized.includes('testing')) {
-    return 'qa-testing'
+  if (
+    normalized.includes("qa") ||
+    normalized.includes("test") ||
+    normalized.includes("testing")
+  ) {
+    return "qa-testing";
   }
-  if (normalized === 'custom' || normalized.includes('bespoke')) {
-    return 'custom'
+  if (normalized === "custom" || normalized.includes("bespoke")) {
+    return "custom";
   }
-  if (normalized.includes('web') || normalized.includes('frontend') || normalized.includes('design') || normalized.includes('portal')) {
-    return 'web-development'
+  if (
+    normalized.includes("web") ||
+    normalized.includes("frontend") ||
+    normalized.includes("design") ||
+    normalized.includes("portal")
+  ) {
+    return "web-development";
   }
 
-  return 'web-development'
+  return "web-development";
 }
 
 const PROJECT_OPTIONS: ProjectOption[] = [
   {
-    id: 'web-development',
-    title: 'Web Development',
-    desc: 'Responsive web apps, customer portals, dashboards & SaaS systems',
-    eventSlug: 'globnetics',
+    id: "web-development",
+    title: "Web Development",
+    desc: "Responsive web apps, customer portals, dashboards & SaaS systems",
+    eventSlug: "falcon",
   },
   {
-    id: 'mobile-development',
-    title: 'Mobile Development',
-    desc: 'Native iOS/Android & cross-platform apps',
-    eventSlug: 'globnetics',
+    id: "mobile-development",
+    title: "Mobile Development",
+    desc: "Native iOS/Android & cross-platform apps",
+    eventSlug: "falcon",
   },
   {
-    id: 'backend-api-development',
-    title: 'Backend & APIs',
-    desc: 'Microservices, REST/gRPC APIs & authentication systems',
-    eventSlug: 'globnetics',
+    id: "backend-api-development",
+    title: "Backend & APIs",
+    desc: "Microservices, REST/gRPC APIs & authentication systems",
+    eventSlug: "falcon",
   },
   {
-    id: 'enterprise-software',
-    title: 'Enterprise Software & ERP',
-    desc: 'Business-critical systems, custom ERPs & workflows',
-    eventSlug: 'globnetics',
+    id: "enterprise-software",
+    title: "Enterprise Software & ERP",
+    desc: "Business-critical systems, custom ERPs & workflows",
+    eventSlug: "falcon",
   },
   {
-    id: 'cloud-devops',
-    title: 'Cloud & DevOps',
-    desc: 'Cloud infrastructure, Kubernetes, CI/CD & auto-scaling',
-    eventSlug: 'globnetics',
+    id: "cloud-devops",
+    title: "Cloud & DevOps",
+    desc: "Cloud infrastructure, Kubernetes, CI/CD & auto-scaling",
+    eventSlug: "falcon",
   },
   {
-    id: 'ai-automation',
-    title: 'AI & Automation',
-    desc: 'Intelligent assistants, document OCR & automated workflows',
-    eventSlug: 'globnetics',
+    id: "ai-automation",
+    title: "AI & Automation",
+    desc: "Intelligent assistants, document OCR & automated workflows",
+    eventSlug: "falcon",
   },
   {
-    id: 'software-modernization',
-    title: 'Software Modernization',
-    desc: 'Microservices transition, cloud migration & refactoring',
-    eventSlug: 'globnetics',
+    id: "software-modernization",
+    title: "Software Modernization",
+    desc: "Microservices transition, cloud migration & refactoring",
+    eventSlug: "falcon",
   },
   {
-    id: 'qa-testing',
-    title: 'QA & Testing',
-    desc: 'Automated E2E testing, security audits & load testing',
-    eventSlug: 'globnetics',
+    id: "qa-testing",
+    title: "QA & Testing",
+    desc: "Automated E2E testing, security audits & load testing",
+    eventSlug: "falcon",
   },
   {
-    id: 'custom',
-    title: 'Custom Systems & Architecture',
-    desc: 'Bespoke architectures & complex workflows',
-    eventSlug: 'globnetics',
+    id: "custom",
+    title: "Custom Systems & Architecture",
+    desc: "Bespoke architectures & complex workflows",
+    eventSlug: "falcon",
   },
-]
+];
 
 const qualifySchema = z.object({
-  name: z.string().min(2, 'Please enter your full name'),
-  email: z.string().email('Please enter a valid work email address'),
-  company: z.string().min(2, 'Please enter your company name'),
+  name: z.string().min(2, "Please enter your full name"),
+  email: z.string().email("Please enter a valid work email address"),
+  company: z.string().min(2, "Please enter your company name"),
   projectType: z.enum([
-    'web-development',
-    'mobile-development',
-    'backend-api-development',
-    'enterprise-software',
-    'cloud-devops',
-    'ai-automation',
-    'software-modernization',
-    'qa-testing',
-    'custom',
+    "web-development",
+    "mobile-development",
+    "backend-api-development",
+    "enterprise-software",
+    "cloud-devops",
+    "ai-automation",
+    "software-modernization",
+    "qa-testing",
+    "custom",
   ]),
   notes: z.string().optional(),
-})
+});
 
-type QualifyFormData = z.infer<typeof qualifySchema>
+type QualifyFormData = z.infer<typeof qualifySchema>;
 
-export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-development' }: QuoteModalProps) {
-  const router = useRouter()
-  const modalRef = useRef<HTMLDivElement>(null)
+export default function QuoteModal({
+  isOpen,
+  onClose,
+  initialProjectType = "web-development",
+}: QuoteModalProps) {
+  const router = useRouter();
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  const [step, setStep] = useState<'qualify' | 'schedule' | 'confirmed'>('qualify')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [step, setStep] = useState<"qualify" | "schedule" | "confirmed">(
+    "qualify",
+  );
+  const [selectedTimezone, setSelectedTimezone] =
+    useState<string>("America/New_York");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const normalizedDefault = normalizeProjectType(initialProjectType)
+  const normalizedDefault = normalizeProjectType(initialProjectType);
 
   const {
     register,
@@ -168,75 +207,77 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
   } = useForm<QualifyFormData>({
     resolver: zodResolver(qualifySchema),
     defaultValues: {
-      name: '',
-      email: '',
-      company: '',
+      name: "",
+      email: "",
+      company: "",
       projectType: normalizedDefault,
-      notes: '',
+      notes: "",
     },
-  })
+  });
 
-  const watchedProjectType = watch('projectType')
-  const watchedName = watch('name')
-  const watchedEmail = watch('email')
-  const watchedCompany = watch('company')
-  const watchedNotes = watch('notes')
+  const watchedProjectType = watch("projectType");
+  const watchedName = watch("name");
+  const watchedEmail = watch("email");
+  const watchedCompany = watch("company");
+  const watchedNotes = watch("notes");
 
   useEffect(() => {
     if (isOpen && initialProjectType) {
-      const norm = normalizeProjectType(initialProjectType)
-      setValue('projectType', norm)
+      const norm = normalizeProjectType(initialProjectType);
+      setValue("projectType", norm);
     }
-  }, [isOpen, initialProjectType, setValue])
+  }, [isOpen, initialProjectType, setValue]);
 
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose()
+      if (e.key === "Escape") {
+        onClose();
       }
-    }
+    };
 
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleKeyDown)
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isOpen, onClose])
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   const onQualifySubmit = () => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     setTimeout(() => {
-      setIsSubmitting(false)
-      setStep('schedule')
-    }, 300)
-  }
+      setIsSubmitting(false);
+      setStep("schedule");
+    }, 300);
+  };
 
   const handleNavigateToContact = () => {
-    onClose()
-    router.push('/contact')
-  }
+    onClose();
+    router.push("/contact");
+  };
 
   const handleResetAndClose = () => {
-    onClose()
+    onClose();
     setTimeout(() => {
-      setStep('qualify')
-      reset()
-    }, 300)
-  }
+      setStep("qualify");
+      reset();
+    }, 300);
+  };
 
-  const activeOption = PROJECT_OPTIONS.find((p) => p.id === watchedProjectType) || PROJECT_OPTIONS[0]
+  const activeOption =
+    PROJECT_OPTIONS.find((p) => p.id === watchedProjectType) ||
+    PROJECT_OPTIONS[0];
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/80 backdrop-blur-md animate-fadeIn"
       onClick={(e) => {
-        if (e.target === e.currentTarget) handleResetAndClose()
+        if (e.target === e.currentTarget) handleResetAndClose();
       }}
       role="dialog"
       aria-modal="true"
@@ -245,15 +286,15 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
       <div
         ref={modalRef}
         className={`relative w-full overflow-hidden rounded-2xl border transition-all duration-300 shadow-2xl shadow-black/40 dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] bg-white dark:bg-black border-(--border-color) ${
-          step === 'schedule' ? 'max-w-4xl' : 'max-w-2xl'
+          step === "schedule" ? "max-w-4xl" : "max-w-2xl"
         }`}
       >
         <div className="flex items-center justify-between border-b border-(--border-color) px-6 py-4 bg-white dark:bg-black">
           <div className="flex items-center gap-2">
-            {step === 'schedule' && (
+            {step === "schedule" && (
               <button
                 type="button"
-                onClick={() => setStep('qualify')}
+                onClick={() => setStep("qualify")}
                 className="mr-1 p-1 rounded-md text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--border-color)/30 transition-colors cursor-pointer"
                 aria-label="Back to details"
               >
@@ -262,12 +303,20 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
             )}
             <div>
               <span className="font-mono text-xs tracking-wider uppercase text-(--teal) font-medium">
-                {step === 'qualify' ? 'Step 1 of 2: Requirements' : step === 'schedule' ? 'Step 2 of 2: Select a Time Slot' : 'Booking Confirmed'}
+                {step === "qualify"
+                  ? "Step 1 of 2: Requirements"
+                  : step === "schedule"
+                    ? "Step 2 of 2: Select a Time Slot"
+                    : "Booking Confirmed"}
               </span>
-              <h2 id="quote-modal-title" className="text-lg font-bold text-(--text-primary) font-display">
-                {step === 'qualify' && 'Request a Scoped Architecture Estimate'}
-                {step === 'schedule' && `${activeOption.title} Discovery Session`}
-                {step === 'confirmed' && 'Discovery Call Scheduled'}
+              <h2
+                id="quote-modal-title"
+                className="text-lg font-bold text-(--text-primary) font-display"
+              >
+                {step === "qualify" && "Request a Scoped Architecture Estimate"}
+                {step === "schedule" &&
+                  `${activeOption.title} Discovery Session`}
+                {step === "confirmed" && "Discovery Call Scheduled"}
               </h2>
             </div>
           </div>
@@ -282,10 +331,15 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
         </div>
 
         <div className="p-6 bg-white dark:bg-black">
-          {step === 'qualify' && (
-            <form onSubmit={handleSubmit(onQualifySubmit)} className="space-y-4">
+          {step === "qualify" && (
+            <form
+              onSubmit={handleSubmit(onQualifySubmit)}
+              className="space-y-4"
+            >
               <p className="text-xs sm:text-sm text-(--text-secondary) leading-relaxed">
-                Tell us what you&apos;re building. We&apos;ll review your requirements and prepare a realistic architecture &amp; cost estimate for your discovery call.
+                Tell us what you&apos;re building. We&apos;ll review your
+                requirements and prepare a realistic architecture &amp; cost
+                estimate for your discovery call.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -300,11 +354,15 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                   <div className="relative">
                     <select
                       id="quote-project-type"
-                      {...register('projectType')}
+                      {...register("projectType")}
                       className="w-full h-11 px-3.5 pr-10 rounded-xl border border-(--border-color) text-sm bg-white dark:bg-black text-(--text-primary) transition-all duration-200 outline-none focus:border-(--teal) focus:ring-1 focus:ring-(--teal) cursor-pointer appearance-none"
                     >
                       {PROJECT_OPTIONS.map((opt) => (
-                        <option key={opt.id} value={opt.id} className="bg-white dark:bg-black text-(--text-primary)">
+                        <option
+                          key={opt.id}
+                          value={opt.id}
+                          className="bg-white dark:bg-black text-(--text-primary)"
+                        >
                           {opt.title}
                         </option>
                       ))}
@@ -312,7 +370,9 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                     <ChevronDown className="w-4 h-4 text-(--text-muted) absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   </div>
                   {errors.projectType?.message && (
-                    <span className="text-xs text-red-400 font-medium pl-0.5">{errors.projectType.message}</span>
+                    <span className="text-xs text-red-400 font-medium pl-0.5">
+                      {errors.projectType.message}
+                    </span>
                   )}
                 </div>
 
@@ -321,7 +381,7 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                   required
                   placeholder=""
                   error={errors.company?.message}
-                  {...register('company')}
+                  {...register("company")}
                 />
               </div>
 
@@ -331,7 +391,7 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                   required
                   placeholder=""
                   error={errors.name?.message}
-                  {...register('name')}
+                  {...register("name")}
                 />
                 <Input
                   label="Work Email"
@@ -339,7 +399,7 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                   required
                   placeholder=""
                   error={errors.email?.message}
-                  {...register('email')}
+                  {...register("email")}
                 />
               </div>
 
@@ -349,7 +409,7 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                 rows={2}
                 placeholder="Current stack, core pain points, target launch date..."
                 error={errors.notes?.message}
-                {...register('notes')}
+                {...register("notes")}
               />
 
               <div className="pt-2">
@@ -359,7 +419,9 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
                   size="lg"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Processing...' : 'Continue to Schedule Discovery Call'}
+                  {isSubmitting
+                    ? "Processing..."
+                    : "Continue to Schedule Discovery Call"}
                 </Button>
               </div>
 
@@ -375,25 +437,28 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
             </form>
           )}
 
-          {step === 'schedule' && (
+          {step === "schedule" && (
             <div className="w-full space-y-3">
               <div className="w-full h-[420px] sm:h-[450px] rounded-xl overflow-hidden border border-(--border-color) bg-white dark:bg-black">
                 <Cal
-                  calLink="globnetics?timeZone=America/New_York"
-                  style={{ width: '100%', height: '100%', overflow: 'auto' }}
+                  calLink="falcon?timeZone=America/New_York"
+                  style={{ width: "100%", height: "100%", overflow: "auto" }}
                   config={{
                     name: watchedName,
                     email: watchedEmail,
-                    notes: `${watchedCompany ? `Company: ${watchedCompany}. ` : ''}${watchedNotes || ''}`,
-                    theme: 'auto',
-                    timeZone: 'America/New_York',
+                    notes: `${watchedCompany ? `Company: ${watchedCompany}. ` : ""}${watchedNotes || ""}`,
+                    theme: "auto",
+                    timeZone: "America/New_York",
                   }}
                 />
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 px-1 text-xs text-(--text-muted)">
                 <span>
-                  Selected domain: <strong className="text-(--text-primary)">{activeOption.title}</strong>
+                  Selected domain:{" "}
+                  <strong className="text-(--text-primary)">
+                    {activeOption.title}
+                  </strong>
                 </span>
                 <button
                   type="button"
@@ -408,5 +473,5 @@ export default function QuoteModal({ isOpen, onClose, initialProjectType = 'web-
         </div>
       </div>
     </div>
-  )
+  );
 }

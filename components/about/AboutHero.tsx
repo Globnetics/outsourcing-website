@@ -27,7 +27,7 @@ export default function AboutHero() {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="mt-6 text-sm sm:text-base md:text-lg text-(--text-secondary) leading-relaxed"
             >
-              RiseUp Solutions, we don&apos;t just write code; we engineer scalable, robust systems that drive business transformation. Born from a collective of enterprise architects and high-growth startup veterans, our mission is to deliver technical excellence without compromise.
+              At Falcon, we don&apos;t just write code; we engineer scalable, robust systems that drive business transformation. Born from a collective of enterprise architects and high-growth startup veterans, our mission is to deliver technical excellence without compromise.
             </motion.p>
 
             <motion.div

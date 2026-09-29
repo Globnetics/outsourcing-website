@@ -25,14 +25,14 @@ export default function Footer() {
             <div>
               <Link href="/" className="inline-flex items-center gap-2.5 group">
                 <div className="w-8.5 h-8.5 rounded-lg bg-[#0b2545] border border-white/15 flex items-center justify-center text-white font-mono font-bold text-sm tracking-tighter group-hover:border-(--teal) transition-colors">
-                  TN
+                  FL
                 </div>
                 <div className="flex flex-col">
                   <span className="font-bold text-lg tracking-tight text-white font-display">
-                    RiseUp
+                    Falcon
                   </span>
                   <span className="font-mono text-[9px] uppercase tracking-widest text-(--teal) font-medium">
-                    Engineering
+                    Technologies
                   </span>
                 </div>
               </Link>
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
-          <p>© {new Date().getFullYear()} RiseUp Solutions. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Falcon. All rights reserved.</p>
           <p className="text-zinc-600">Enterprise Engineering · Mission Critical Systems</p>
         </div>
       </div>

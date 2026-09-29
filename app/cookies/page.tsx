@@ -18,7 +18,7 @@ export default function CookiesPage() {
 
         <div className="mt-8 space-y-6 text-sm text-(--text-secondary) leading-relaxed">
           <p>
-            RiseUp Solutions uses essential cookies and local preferences (such
+            Falcon uses essential cookies and local preferences (such
             as theme choice) solely to ensure basic site functionality and
             enhance your user experience. We do not use third-party behavioral
             tracking cookies.
