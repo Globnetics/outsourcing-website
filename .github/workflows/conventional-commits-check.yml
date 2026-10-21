@@ -5,11 +5,11 @@ on:
     types: [opened, edited, synchronize, reopened]
 
 jobs:
-  lint-pr-title:
-    name: "Validate PR Title (Conventional Commits)"
+  validate-pr-title:
+    name: "Validate PR Title"
     runs-on: ubuntu-latest
     steps:
-      - name: "Validate PR Title"
+      - name: "Lint PR Title (Conventional Commits)"
         uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -27,5 +27,45 @@ jobs:
             chore
             revert
           requireScope: false
-          subjectPattern: ^(\[[A-Z]+-[0-9]+\]\s|[A-Z]+-[0-9]+:\s)?.+$
-          subjectPatternError: "PR title subject must describe the change and optionally start with a ticket ID (e.g., 'feat: [GLOB-101] add login' or 'fix(auth): resolve token expiry')."
+          # Matches standard subjects (e.g. 'add user login') OR ticket-prefixed subjects (e.g. '[GLOB-101] add login', 'GLOB-101: add login')
+          subjectPattern: ^(\[[A-Z0-9_#-]+\]\s?|[A-Z0-9_#-]+[:\-]\s?)?.+$
+          subjectPatternError: "PR title must follow Conventional Commits format (e.g. 'feat: [GLOB-101] add login', 'feat(GLOB-101): add login', or 'fix(auth): resolve token expiry')."
+
+  validate-commits:
+    name: "Validate Individual Commits"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: "Verify All Commit Messages in PR"
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=100
+          MERGE_BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
+          echo "Checking commits between merge-base ($MERGE_BASE) and HEAD..."
+
+          PATTERN="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9._#-]+\))?(!)?: .+"
+          FAILED=0
+
+          while IFS= read -r COMMIT_HASH; do
+            [ -z "$COMMIT_HASH" ] && continue
+            MSG=$(git log -1 --format="%s" "$COMMIT_HASH")
+            if [[ ! "$MSG" =~ $PATTERN ]]; then
+              echo "::error title=Non-conventional Commit Message::Commit $COMMIT_HASH has invalid message: '$MSG'"
+              echo "Must follow Conventional Commits: <type>(<optional-scope>): <description>"
+              FAILED=1
+            else
+              echo "Commit $COMMIT_HASH: '$MSG' is valid."
+            fi
+          done < <(git rev-list "$MERGE_BASE..HEAD")
+
+          if [ $FAILED -ne 0 ]; then
+            echo ""
+            echo "One or more commit messages violate Conventional Commits."
+            echo "Tip: If your team only uses 'Squash and Merge', only the PR title will be preserved in main. If rebasing/merging, all commits must conform."
+            exit 1
+          fi
+          echo "All individual commit messages conform to Conventional Commits."
