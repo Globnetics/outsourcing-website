@@ -2,7 +2,7 @@ name: "PR Quality & Linear History Guard"
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
 
 jobs:
   quality-gate:
@@ -14,28 +14,40 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Check for Merge Commits (Enforce Linear History)"
+      - name: "Check for Merge Commits (Enforce Linear History via Merge-Base)"
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          MERGE_COMMITS=$(git rev-list --merges "$BASE_SHA..$HEAD_SHA")
+          git fetch origin ${{ github.base_ref }} --depth=100
+          MERGE_BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
+          echo "Calculated merge-base fork point: $MERGE_BASE"
+
+          # Check for merge commits introduced specifically within this PR branch
+          MERGE_COMMITS=$(git rev-list --merges "$MERGE_BASE..HEAD")
           
           if [ -n "$MERGE_COMMITS" ]; then
-            echo "::error title=Merge Commits Detected::PR contains merge commits. Globnetics enforces clean linear history. Please rebase your branch on top of the base branch."
-            echo "Run locally:"
+            echo "::error title=Merge Commits Detected::PR contains merge commits. Globnetics enforces clean linear history. Please rebase your branch on top of origin/${{ github.base_ref }} instead of merging."
+            echo ""
+            echo "Offending merge commits found in PR branch:"
+            echo "$MERGE_COMMITS"
+            echo ""
+            echo "Run locally to fix:"
             echo "  git fetch origin"
-            echo "  git rebase origin/main"
+            echo "  git rebase origin/${{ github.base_ref }}"
             echo "  git push --force-with-lease"
             exit 1
           fi
-          echo "Linear history verified: No merge commits detected in PR."
+          echo "Linear history verified: No merge commits detected in PR range ($MERGE_BASE..HEAD)."
 
-      - name: "Validate PR Description"
+      - name: "Enforce Mandatory PR Description"
         env:
           BODY: ${{ github.event.pull_request.body }}
         run: |
-          if [ -z "$BODY" ] || [ ${#BODY} -lt 15 ]; then
-            echo "::warning title=Short or Missing PR Description::Please provide a meaningful PR description explaining the changes and testing performed."
-          else
-            echo "PR description check passed (${#BODY} characters)."
+          # Strip HTML comments, markdown boilerplate, and whitespace
+          CLEAN_BODY=$(echo "$BODY" | sed -e 's/<!--.*-->//g' -e 's/<!--/ /g' -e 's/-->/ /g' | tr -d '[:space:]')
+          MIN_CHARS=20
+
+          if [ -z "$CLEAN_BODY" ] || [ ${#CLEAN_BODY} -lt $MIN_CHARS ]; then
+            echo "::error title=Missing Mandatory PR Description::Pull request description cannot be empty. Please provide at least $MIN_CHARS characters explaining the change and testing performed."
+            echo "A complete PR description is required before merging."
+            exit 1
           fi
+          echo "PR description verified (${#CLEAN_BODY} meaningful characters)."
