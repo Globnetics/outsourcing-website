@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     'About content Edited',
 }
+const testData: any = "Testing Copilot review";
+console.log(testData);
 
 export default function AboutPage() {
   return (
