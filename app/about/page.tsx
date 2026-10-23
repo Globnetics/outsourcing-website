@@ -8,7 +8,7 @@ import AboutCTA from '@/components/about/AboutCTA'
 export const metadata: Metadata = {
   title: 'About Us | Falcon',
   description:
-    'Born from a collective of enterprise architects and high-growth startup veterans, our mission is to deliver technical excellence without compromise.',
+    'About content Edited',
 }
 
 export default function AboutPage() {
