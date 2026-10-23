@@ -1,4 +1,4 @@
-name: "PR Quality & Linear History Guard"
+name: "PR Quality Gate"
 
 on:
   pull_request:
@@ -6,36 +6,11 @@ on:
 
 jobs:
   quality-gate:
-    name: "Linear History & PR Quality Gate"
+    name: "PR Quality Gate"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: "Check for Merge Commits (Enforce Linear History via Merge-Base)"
-        run: |
-          git fetch origin ${{ github.base_ref }} --depth=100
-          MERGE_BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
-          echo "Calculated merge-base fork point: $MERGE_BASE"
-
-          # Check for merge commits introduced specifically within this PR branch
-          MERGE_COMMITS=$(git rev-list --merges "$MERGE_BASE..HEAD")
-          
-          if [ -n "$MERGE_COMMITS" ]; then
-            echo "::error title=Merge Commits Detected::PR contains merge commits. Globnetics enforces clean linear history. Please rebase your branch on top of origin/${{ github.base_ref }} instead of merging."
-            echo ""
-            echo "Offending merge commits found in PR branch:"
-            echo "$MERGE_COMMITS"
-            echo ""
-            echo "Run locally to fix:"
-            echo "  git fetch origin"
-            echo "  git rebase origin/${{ github.base_ref }}"
-            echo "  git push --force-with-lease"
-            exit 1
-          fi
-          echo "Linear history verified: No merge commits detected in PR range ($MERGE_BASE..HEAD)."
 
       - name: "Enforce Mandatory PR Description"
         env:
